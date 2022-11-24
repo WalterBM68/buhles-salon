@@ -1,15 +1,19 @@
-import assert from 'assert';
-import SalonBooking from '../salon-booking.js';
-import pgPromise from 'pg-promise';
+const assert = require('assert');
+const  SalonBooking = require('../salon-booking');
+const pgPromise = require('pg-promise');
+const pgp = pgPromise();
 
-// TODO configure this to work.
-const DATABASE_URL = process.env.DATABASE_URL || "postgresql://localhost:5432/salon_test";
-
+const DATABASE_URL= process.env.DATABASE_URL || "postgresql://postgres:pg123@localhost:5432/buhle_salon_booking";
 const config = { 
 	connectionString : DATABASE_URL
 }
 
-const pgp = pgPromise();
+if (process.env.NODE_ENV == 'production') {
+	config.ssl = { 
+		rejectUnauthorized : false
+	}
+}
+
 const db = pgp(config);
 
 let booking = SalonBooking(db);
