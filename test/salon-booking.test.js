@@ -20,9 +20,6 @@ let booking = SalonBooking(db);
 
 describe("The Booking Salon", function () {
 
-    beforeEach(async function () {
-        await db.none("delete from booking;");
-    });
 
     it("should be able to find all clients that have registered", async function () {
         const clients = await booking.findClient('0824591714');
@@ -54,6 +51,7 @@ describe("The Booking Salon", function () {
         
         const bookings = await booking.findClientBookings(client.id);
         assert.equal(1, bookings.length);
+        await db.none("delete from booking;");
     });
 
     it("should be able to get client booking(s)", async function () {
@@ -80,6 +78,7 @@ describe("The Booking Salon", function () {
         const bookings = await booking.findClientBookings(client1.id);
 
         assert.equal(2, bookings.length)
+        await db.none("delete from booking;");
     })
 
     it("should be able to get bookings for a date", async function () {
@@ -106,7 +105,7 @@ describe("The Booking Salon", function () {
         const bookings = await booking.findAllBookings(aDate);
 
         assert.equal(2, bookings.length)
-
+        await db.none("delete from booking;");
     });
 
     it.skip("should be able to find the total income for a day", async function() {
@@ -132,7 +131,7 @@ describe("The Booking Salon", function () {
         const sum = await booking.totalIncomeForDay('2022-11-24');
 
         assert.equal(Number(sum.incomeAmount), 425);
-       
+        await db.none("delete from booking;");
     })
 
     it.skip("should be able to find the most valuable client", async function() {
