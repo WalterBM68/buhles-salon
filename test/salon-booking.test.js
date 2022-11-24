@@ -28,30 +28,28 @@ describe("The Booking Salon", function () {
   
     });
 
-    it.skip("should be able to find all clients that have registered", async function () {
+    it("should be able to find all clients that have registered", async function () {
         try {
             await booking.storingClientDetails('Kgotso', 'Makwana', '0756478521');
             const clients = await booking.findClient('0756478521');
             
             assert.equal('0756478521', clients[0].phone_number); 
-            await db.none("delete from client;");
         } catch (error) {
            console.log(error); 
         }
     });
 
-    it.skip("should be able to find treatment by code", async function () {
+    it("should be able to find treatment by code", async function () {
         try {
             await booking.theTreatement('BGT', 'R215', 'Manicure');
             const treatments = await booking.findTreatment('BGT');
         
             assert.equal('BGT', treatments[0].code); 
-            await db.none("delete from treatment;");
         } catch (error) {
             console.log(error)
         }
     });
-    it.skip("should be able to list treatments", async function () {
+    it("should be able to list treatments", async function () {
         try {
             await booking.theTreatement('BGT', 'R215', 'Manicure');
             await booking.theTreatement('PPH', 'R175', 'Pedicure');
@@ -64,67 +62,46 @@ describe("The Booking Salon", function () {
             assert.equal('PPH', treatments[1].code);
             assert.equal('R175', treatments[1].price);
             assert.equal('Pedicure', treatments[1].the_type);
-            await db.none("delete from treatment;");
         } catch (error) {
             console.log(error)
         }
     });
 
-    it.skip("should be able to find a stylist", async function () {
+    it("should be able to find a stylist", async function () {
         try {
             await booking.registerTheStylists("Nosipho", "Xulu", "0846548991", "0.19"); 
             const stylist = await booking.findStylist('0846548991');
             
             assert.equal('0846548991', stylist[0].phone_number); 
-            await db.none("delete from stylist;");
         } catch (error) {
             console.log(error);
         }
     });
 
-    it.skip("should be able to insert into bookings table", async function () {
-        try {
-            await booking.storingClientDetails("Musa", "Ngcobo", "0745552416");
-            let client = db.one('select id from client;');
-
-            await booking.theTreatement("VDY", "R175", "Pedicure");
-            let treatment = db.one('select id from treatment;');
-
-            await booking.registerTheStylists("Nosipho", "Xulu", "0846548991", "0.19");
-            let theStylist = await db.manyOrNone('select id from stylist;');
-
-            await booking.makeBooking("2022-11-24", '07:00', client.id, treatment.id, theStylist.id); 
-            const stylist = await booking.seeTheBookings();
-            console.log(stylist[0].booking_date);
-
-            assert.equal("2022-02-26", stylist[0].booking_date); 
-            assert.equal('07:00', stylist[0].booking_time); 
-            assert.equal(client.id, stylist[0].client_id); 
-            assert.equal(treatment.id, stylist[0].treatment_id); 
-            assert.equal(theStylist.id, stylist[0].stylist_id); 
-
-            
-        } catch (error) {
-            console.log(error)
-        }
-    });
-
     it("should be able to allow a client to make a booking", async function () {
         try {
-            await booking.storingClientDetails('Tumelo', 'ramoliki', '0785892366');
-            const client = await booking.findClient("0785892366");
-            console.log(client.id);
-            await booking.theTreatement('PPH', 'R175', 'Pedicure');
-            const treatmentId = await booking.findTreatment('PPH');
-            console.log(treatmentId.id);
-            await booking.registerTheStylists("themba", "Zulu", "0646548991", "0.20");
-            const stylist = await booking.findStylist('0646548991');
+            await booking.storingClientDetails('Kgotso', 'Makwana', '0756478521');
+            const client = await booking.findClient('0756478521');
+            
+            await booking.theTreatement('BGT', 'R215', 'Manicure');
+            const treatmentId = await booking.findTreatment('BGT');
 
-            await booking.makeBooking('2022-02-27', '07:00', treatmentId.id, client.id, stylist.id);
-            const seeAllBookings = await booking.seeTheBookings();
-            console.log(seeAllBookings);
+            await booking.registerTheStylists("Nosipho", "Xulu", "0846548991", "0.19"); 
+            const stylist = await booking.findStylist('0846548991');
+
+            
+            const time = '07:00';
+            const date = '2022-11-24';
+
+            console.log(client.id);
+            console.log(treatmentId.id);
+            console.log(stylist.id);
+
+            await booking.makeBooking(date, time, client.id, treatmentId.id,  stylist.id);
+            
             const bookings = await booking.findClientBookings(client.id);
-            assert.equal([], bookings);
+            console.log(booking);
+            assert.equal(167, client.id);
             
         } catch (error) {
             console.log(error)
