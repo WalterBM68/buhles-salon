@@ -8,7 +8,7 @@ create table client(
 
 create table treatment(
     id serial not null primary key,
-    treatment text not null,
+    the_type text not null,
     code CHAR(3) not null,
     price VARCHAR(15)
 );

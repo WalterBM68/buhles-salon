@@ -1,5 +1,8 @@
 # Buhles salon
 
+
+Kanban link: https://kanbanflow.com/board/Pmq2Uu3
+
 Buhle has started a salon in her local shopping centre and needs a system to keep track of her business. The salon currently offers 4 different treatments `Pedicures`, `Manicures`, `Make up` & `Brows & Lashes`.
 
 All stylists can do all treatments.
