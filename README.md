@@ -1,5 +1,6 @@
 # Buhles salon
 
+[![Node.js CI](https://github.com/WalterBM68/buhles-salon/actions/workflows/node.js.yml/badge.svg)](https://github.com/WalterBM68/buhles-salon/actions/workflows/node.js.yml)
 
 Kanban link: https://kanbanflow.com/board/Pmq2Uu3
 
